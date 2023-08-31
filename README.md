@@ -1,16 +1,11 @@
 # SimpleCommands
 My first C# realse for FiveM.
 
-## **Commands right now**\n
-"/startcar" - *Works with FiveM keybinds*
-:-   "/stopcar" - *Works with FiveM keybinds*
-More to come!
+## **Commands right now**
 
-<p>This is the first line.<br>
-    And this is the second line.&lt;/p&gt;</code>
-  </td>
-  <td>
-    <p>This is the first line.<br />   
-    And this is the second line.</p>
+<p>"/startcar" - *Works with FiveM keybinds*.<br>
+   "/stopcar" - *Works with FiveM keybinds*.&lt;/p&gt;</code>
   </td>
 </tr>
+More to come!
+

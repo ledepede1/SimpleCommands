@@ -1,5 +1,5 @@
 # SimpleCommands
-My first C# realse for FiveM.
+My first C# release for FiveM.
 
 ## **Rquirements:**
 <p>"Swt_Notifications" - https://github.com/Switty6/swt_notifications<br>

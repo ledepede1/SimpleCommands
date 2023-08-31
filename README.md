@@ -5,7 +5,7 @@ My first C# realse for FiveM.
 
 <p>"/stopcar" - Works with FiveM keybinds.<br>
    <p>"/startcar" - Works with FiveM keybinds.<br>
-         <p>"More to come!".<br>
+         <p>More to come!<br>
   </td>
 </tr>
 

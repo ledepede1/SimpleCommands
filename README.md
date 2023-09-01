@@ -1,4 +1,4 @@
-[![Typing SVG](https://readme-typing-svg.demolab.com/?lines=Made+by+Ledepede1;Second+line+of+text)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com/?lines=Made+by+Ledepede1)](https://git.io/typing-svg)
 # SimpleCommands
 A basic and simple command script made in C#.
 

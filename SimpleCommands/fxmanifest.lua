@@ -12,3 +12,4 @@ client_scripts {
 	'Client/Client.net.dll',
 	'Client/Notifications.lua'
 }
+file 'Config.ini'

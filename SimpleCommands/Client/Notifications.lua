@@ -4,3 +4,4 @@ AddEventHandler('simpe_commands:Notifications', function(swt_notificationsType, 
     TriggerEvent(swt_notificationsType, message,position,timeout,color,textColor,progress,icon);
 
 end)
+

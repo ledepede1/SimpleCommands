@@ -8,8 +8,7 @@ A basic and simple command script made in C#.
 
 ### **Commands right now**
 
-<p>"/stopcar" - Works with FiveM keybinds.<br>
-   <p>"/startcar" - Works with FiveM keybinds.<br>
+<p>"/engine" - Works with FiveM keybinds.<br>
          <p>"/cc <Args>" (Cruise Control)<br>
                      <p>"/+clearCC" Works with FiveM keybinds.<br>
          <p>More to come!<br>

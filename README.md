@@ -13,5 +13,8 @@ A basic and simple command script made in C#.
                      <p>"/+clearCC" Works with FiveM keybinds.<br>
          <p>More to come!<br>
 
+#### **Keybindings**
+All commands that uses keybinds can be changed in `Config.ini`.
+
 
 

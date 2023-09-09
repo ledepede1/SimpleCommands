@@ -3,12 +3,16 @@ using CitizenFX.Core.Native;
 using System;
 using System.Collections.Generic;
 using Config.Reader;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using CitizenFX.Core.UI;
 
 namespace Client {
     public class Main : BaseScript {
-
+        
         private bool IsSpeedSet = false;
         private bool AlreadyStopped = false;
+        private bool alreadyOutlined = false;
 
         private async void LoadCommands() {
             await Delay(50);
@@ -29,11 +33,11 @@ namespace Client {
 
 
 
-        public dynamic playerVehicle = Game.PlayerPed.CurrentVehicle.Handle;
 
         public Main() {
+
             // Loads
-            iniconfig config = new iniconfig("SimpleCommands", "config.ini");
+            iniconfig config = new iniconfig("SimpleCommands", "Config.ini");
             LoadCommands();
 
 
@@ -43,9 +47,11 @@ namespace Client {
 
             API.RegisterCommand("cc", new Action<int, List<object>, string>((source, args, rawCommand) =>
             {
+                int playerVehicle = API.GetVehiclePedIsIn(API.GetPlayerPed(-1), false);
                 // strings:
                 string turnonmaxSpeed = config.GetStringValue("NotificationString", "turnonmaxSpeed", "fallback");
                 string turnonmaxSpeed2 = config.GetStringValue("NotificationString", "turnonmaxSpeed2", "fallback");
+                string yournotinaVehicle = config.GetStringValue("NotificationString", "yournotinaVehicle", "fallback");
 
                 // Need to figure out why it wont work with booleans!
                 string usingOldNotificationSystem = config.GetStringValue("usingOldNotificationSystem", "usingOldNotificationSystem", "fallback");
@@ -59,24 +65,28 @@ namespace Client {
                     if (Game.PlayerPed.IsInVehicle()) {
 
 
-                            // Not a good solution but it works for now. 
-                            // I will figure out soon why boolean wont work!
-                            if (usingOldNotificationSystem == "false") {
-                                // https://github.com/Switty6/swt_notifications 
-                                TriggerEvent("simpe_commands:Notifications", "swt_notifications:Icon", turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, "top-right", 1000, "dark", "grey-1", true, "mdi-engine");
-                            }
-                            else if (usingOldNotificationSystem == "true") {
-                                //Screen.ShowNotification(turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, false);
-                                shownoti(turnonmaxSpeed + "" + speed + " " + turnonmaxSpeed2, true, -70);
-                            }
-                            IsSpeedSet = true;
-                            API.SetVehicleMaxSpeed(playerVehicle, v);
-
+                        // Not a good solution but it works for now. 
+                        // I will figure out soon why boolean wont work!
+                        if (usingOldNotificationSystem == "false") {
+                            // https://github.com/Switty6/swt_notifications 
+                            TriggerEvent("simpe_commands:Notifications", "swt_notifications:Icon", turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, "top-right", 1000, "dark", "grey-1", true, "mdi-engine");
                         }
+                        else if (usingOldNotificationSystem == "true") {
+                            //Screen.ShowNotification(turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, false);
+                            shownoti(turnonmaxSpeed + "" + speed + " " + turnonmaxSpeed2, true, -70);
+                        }
+                        IsSpeedSet = true;
+                        API.SetVehicleMaxSpeed(playerVehicle, v);
+
                     }
+                    else {
+                        Screen.ShowNotification(yournotinaVehicle, false);
+                    }
+                }
             }), false);
 
             API.RegisterCommand("+clearCC", new Action<int, List<object>, string>((source, args, rawCommand) => {
+                int playerVehicle = API.GetVehiclePedIsIn(API.GetPlayerPed(-1), false);
                 // Strings:
                 string turnoffmaxSpeed = config.GetStringValue("NotificationString", "turnoffmaxSpeed", "fallback");
 
@@ -101,9 +111,9 @@ namespace Client {
         }
 
         private void toggleCar() {
+            int playerVehicle = API.GetVehiclePedIsIn(API.GetPlayerPed(-1), false);
             if (Game.PlayerPed.IsInVehicle()) {
                 if (AlreadyStopped == false) {
-                    var playerVehicle = Game.PlayerPed.CurrentVehicle.Handle;
 
                     // https://github.com/Switty6/swt_notifications 
                     TriggerEvent("simpe_commands:Notifications", "swt_notifications:Icon", "Turning off Vehicle", "top-right", 1000, "dark", "grey-1", true, "mdi-engine-off");

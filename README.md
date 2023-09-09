@@ -9,9 +9,11 @@ A basic and simple command script made in C#.
 ### **Commands right now**
 
 <p>"/engine" - Works with FiveM keybinds.<br>
-         <p>"/cc <Args>" (Cruise Control)<br>
+         <p>"/cc <Args>" (Cruise Control)<br> 
                      <p>"/+clearCC" Works with FiveM keybinds.<br>
+                        <p>Showcase of CC: https://streamable.com/gkjao5<br>
          <p>More to come!<br>
+         
 
 #### **Keybindings**
 All commands that uses keybinds can be changed in `Config.ini`.

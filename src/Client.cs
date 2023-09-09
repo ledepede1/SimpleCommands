@@ -6,6 +6,7 @@ using Config.Reader;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
+using System.Linq;
 
 namespace Client {
     public class Main : BaseScript {
@@ -47,40 +48,43 @@ namespace Client {
 
             API.RegisterCommand("cc", new Action<int, List<object>, string>((source, args, rawCommand) =>
             {
-                int playerVehicle = API.GetVehiclePedIsIn(API.GetPlayerPed(-1), false);
-                // strings:
-                string turnonmaxSpeed = config.GetStringValue("NotificationString", "turnonmaxSpeed", "fallback");
-                string turnonmaxSpeed2 = config.GetStringValue("NotificationString", "turnonmaxSpeed2", "fallback");
                 string yournotinaVehicle = config.GetStringValue("NotificationString", "yournotinaVehicle", "fallback");
+                if (!Game.PlayerPed.IsInVehicle()) {
+                    Screen.ShowNotification(yournotinaVehicle, false);
+                }
+                else {
+                    if (args.ToList().Count() > 0) {
+                        int playerVehicle = API.GetVehiclePedIsIn(API.GetPlayerPed(-1), false);
+                        // strings:
+                        string turnonmaxSpeed = config.GetStringValue("NotificationString", "turnonmaxSpeed", "fallback");
+                        string turnonmaxSpeed2 = config.GetStringValue("NotificationString", "turnonmaxSpeed2", "fallback");
 
-                // Need to figure out why it wont work with booleans!
-                string usingOldNotificationSystem = config.GetStringValue("usingOldNotificationSystem", "usingOldNotificationSystem", "fallback");
+                        // Need to figure out why it wont work with booleans!
+                        string usingOldNotificationSystem = config.GetStringValue("usingOldNotificationSystem", "usingOldNotificationSystem", "fallback");
 
 
-                double convertedArg = Convert.ToInt32(args[0]);
-                float v = Convert.ToSingle(convertedArg / 3.6);
-                int speed = Convert.ToInt32(v * 3.6);
-
-                if (args.Count > 0) {
-                    if (Game.PlayerPed.IsInVehicle()) {
+                        double convertedArg = Convert.ToInt32(args[0]);
+                        float v = Convert.ToSingle(convertedArg / 3.6);
+                        int speed = Convert.ToInt32(v * 3.6);
 
 
-                        // Not a good solution but it works for now. 
-                        // I will figure out soon why boolean wont work!
-                        if (usingOldNotificationSystem == "false") {
-                            // https://github.com/Switty6/swt_notifications 
-                            TriggerEvent("simpe_commands:Notifications", "swt_notifications:Icon", turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, "top-right", 1000, "dark", "grey-1", true, "mdi-engine");
+                        if (Game.PlayerPed.IsInVehicle()) {
+
+
+                            // Not a good solution but it works for now. 
+                            // I will figure out soon why boolean wont work!
+                            if (usingOldNotificationSystem == "false") {
+                                // https://github.com/Switty6/swt_notifications 
+                                TriggerEvent("simpe_commands:Notifications", "swt_notifications:Icon", turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, "top-right", 1000, "dark", "grey-1", true, "mdi-engine");
+                            }
+                            else if (usingOldNotificationSystem == "true") {
+                                //Screen.ShowNotification(turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, false);
+                                shownoti(turnonmaxSpeed + "" + speed + " " + turnonmaxSpeed2, true, -70);
+                            }
+                            IsSpeedSet = true;
+                            API.SetVehicleMaxSpeed(playerVehicle, v);
+
                         }
-                        else if (usingOldNotificationSystem == "true") {
-                            //Screen.ShowNotification(turnonmaxSpeed + " " + speed + " " + turnonmaxSpeed2, false);
-                            shownoti(turnonmaxSpeed + "" + speed + " " + turnonmaxSpeed2, true, -70);
-                        }
-                        IsSpeedSet = true;
-                        API.SetVehicleMaxSpeed(playerVehicle, v);
-
-                    }
-                    else {
-                        Screen.ShowNotification(yournotinaVehicle, false);
                     }
                 }
             }), false);

@@ -137,6 +137,6 @@ namespace Client {
             API.AddTextEntry("CH_ALERT", message);
             API.BeginTextCommandDisplayHelp("CH_ALERT");
             API.EndTextCommandDisplayHelp(0, false, beep, duration);
-        }
+            }
         }
     }
